@@ -80,6 +80,6 @@ module.exports = {
 			'WEB_BROWSER': JSON.stringify(webBrowser),
 		}),
 		extensionReloader,
-		new CleanWebpackPlugin(),
+		cleanWebpackPlugin
 	],
 }
