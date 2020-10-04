@@ -19,8 +19,7 @@ const extensionReloader = nodeEnv === 'watch' ? new ExtensionReloader({
 	port: 9128,
 	reloadPage: true,
 	entries: {
-		background: 'background',
-		extensionPage: ['popup', 'options'],
+		extensionPage: ['popup'],
 		contentScript: Object.keys(contentScripts),
 	}
 }) : () => { this.apply = () => { } };
@@ -30,8 +29,6 @@ const cleanWebpackPlugin = nodeEnv === 'production' ? new CleanWebpackPlugin() :
 module.exports = {
 	watch: nodeEnv === 'watch',
 	entry: {
-		background: path.join(sourceRootPath, 'ts', 'background', 'index.ts'),
-		options: path.join(sourceRootPath, 'ts', 'options', 'index.tsx'),
 		popup: path.join(sourceRootPath, 'ts', 'popup', 'index.tsx'),
 		...contentScripts,
 	},
@@ -45,17 +42,11 @@ module.exports = {
 	module: {
 		rules: [
 			{ test: /\.(js|ts|tsx)?$/, loader: 'awesome-typescript-loader', exclude: /node_modules/ },
+			{ test: /\.css$/, use: ['style-loader', 'css-loader'] }
 		]
 	},
 	plugins: [
 		new CheckerPlugin(),
-		new HtmlWebpackPlugin({
-			template: path.join(sourceRootPath, 'html', 'options.html'),
-			inject: 'body',
-			filename: 'options.html',
-			title: 'Web Extension Starter - Options Page',
-			chunks: ['options'],
-		}),
 		new HtmlWebpackPlugin({
 			template: path.join(sourceRootPath, 'html', 'popup.html'),
 			inject: 'body',
