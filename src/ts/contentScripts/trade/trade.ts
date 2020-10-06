@@ -40,7 +40,7 @@ export class Trade {
 				//Update Activity
 				let activity: Activity[] = (await browser.storage.sync.get("activity")).activity || []
 				activity.unshift({ id: this.id, timestamp: Date.now() - 1000 })
-				if (activity.length > 100) activity.slice(0, 100)
+				if (activity.length > 100) activity = activity.slice(0, 100)
 				browser.storage.sync.set({ activity })
 				console.log(`Bumped Trade: ${this.id}`)
 			} else {
