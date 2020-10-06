@@ -17,12 +17,13 @@ import { browser } from "webextension-polyfill-ts";
 import { Activity } from "../contentScripts/trade/trade";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { defualtSettings, Settings } from '../background/settings';
 dayjs.extend(relativeTime);
 
 const Popup = () => {
   const [activity, setActivity] = useState([] as Activity[]);
   const [time, setTime] = useState(Date.now());
-  const [settings, setSettings] = useState({ enabled: false });
+  const [settings, setSettings] = useState(defualtSettings);
   useEffect(() => {
     function handler(
       changes: Record<string, Storage["StorageChange"]>,
@@ -52,7 +53,7 @@ const Popup = () => {
     };
   }, []);
   function toggleEnabled() {
-    let newSettings = {
+    let newSettings: Settings = {
       ...settings,
       enabled: !settings.enabled,
     };

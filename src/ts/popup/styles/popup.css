@@ -2,9 +2,10 @@
   box-sizing: border-box;
 }
 
-html {
+html, body {
   overflow-x: hidden;
   width: 400px;
+  font-size: 14px;
 }
 
 .activity-container {

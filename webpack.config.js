@@ -19,6 +19,7 @@ const extensionReloader = nodeEnv === 'watch' ? new ExtensionReloader({
 	port: 9128,
 	reloadPage: true,
 	entries: {
+		background: 'background',
 		extensionPage: ['popup'],
 		contentScript: Object.keys(contentScripts),
 	}
@@ -29,7 +30,8 @@ const cleanWebpackPlugin = nodeEnv === 'production' ? new CleanWebpackPlugin() :
 module.exports = {
 	watch: nodeEnv === 'watch',
 	entry: {
-		popup: path.join(sourceRootPath, 'ts', 'popup', 'index.tsx'),
+		background: path.join(sourceRootPath, 'ts', 'background', 'background.ts'),
+		popup: path.join(sourceRootPath, 'ts', 'popup', 'popup.tsx'),
 		...contentScripts,
 	},
 	output: {

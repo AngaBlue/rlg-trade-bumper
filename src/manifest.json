@@ -1,9 +1,9 @@
 {
-    "name": "RLG Trade Bumper",
-	"version": "0.0.1",
+	"name": "RLG Trade Bumper",
+	"version": "0.0.2",
 	"author": "AngaBlue",
-    "description": "A Rocket League Garage Trade Bumper.",
-    "homepage_url": "https://anga.blue",
+	"description": "Automatically bump your Rocket League Garage trades, and sit back while the trades roll in!",
+	"homepage_url": "https://anga.blue",
 	"icons": {
 		"16": "assets/icon-16x16.png",
 		"48": "assets/icon-48x48.png",
@@ -21,6 +21,12 @@
 		"default_icon": "assets/icon-48x48.png",
 		"default_popup": "popup.html"
 	},
+	"background": {
+		"scripts": [
+			"background.js"
+		],
+		"persistent": true
+	},
 	"content_scripts": [
 		{
 			"js": [
@@ -30,5 +36,11 @@
 				"*://*.rocket-league.com/trades/*"
 			]
 		}
-	]
+	],
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "rlg-trade-bumper@anga.blue",
+			"strict_min_version": "53.0"
+		}
+	}
 }

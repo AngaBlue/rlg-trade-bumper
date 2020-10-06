@@ -20,29 +20,36 @@ export class Trade {
 	bump = async () => {
 		console.log(`Bumping Trade: ${this.id}`)
 		this.state = TradeState.BUMPING;
-		let response = await fetch(`/ajaxfunctions/bumpTrade.php`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-			},
-			body: `alias=${this.id}&csrf_token=${this.tradeManager.csfr}`
-		})
-		let body = await response.text()
-		this.state = TradeState.READY
-		if (body === "success") {
-			this.lastUpdated = Date.now()
-			//Update Activity
-			let activity: Activity[] = (await browser.storage.sync.get("activity")).activity || []
-			activity.unshift({ id: this.id, timestamp: Date.now() })
-			if (activity.length > 100) activity.slice(0, 100)
-			browser.storage.sync.set({ activity })
-			console.log(`Bumped Trade: ${this.id}`)
-		} else {
-			if (body.startsWith("This trade is on a 15 minute bump cooldown.")) {
-				//Bumped too early, update lastUpdated
-				this.lastUpdated = parseTimeString(body.replace("This trade is on a 15 minute bump cooldown. Your last bump was ", "").replace(".", "")) + 30 * 1000
+		let response: Response | null = null;
+		try {
+			response = await fetch(`${location.origin}/ajaxfunctions/bumpTrade.php`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				body: `alias=${this.id}&csrf_token=${this.tradeManager.csfr}`
+			})
+		} catch (error) {
+			console.error(error)
+		}
+		if (response) {
+			let body = await response.text()
+			this.state = TradeState.READY
+			if (body === "success") {
+				this.lastUpdated = Date.now()
+				//Update Activity
+				let activity: Activity[] = (await browser.storage.sync.get("activity")).activity || []
+				activity.unshift({ id: this.id, timestamp: Date.now() - 1000 })
+				if (activity.length > 100) activity.slice(0, 100)
+				browser.storage.sync.set({ activity })
+				console.log(`Bumped Trade: ${this.id}`)
 			} else {
-				location.reload();
+				if (body.startsWith("This trade is on a 15 minute bump cooldown.")) {
+					//Bumped too early, update lastUpdated
+					this.lastUpdated = parseTimeString(body.replace("This trade is on a 15 minute bump cooldown. Your last bump was ", "").replace(".", "")) + 30 * 1000
+				} else {
+					location.reload();
+				}
 			}
 		}
 	}
