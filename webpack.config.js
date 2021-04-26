@@ -56,18 +56,19 @@ module.exports = {
             title: "Web Extension Starter - Popup Page",
             chunks: ["popup"],
         }),
-        new CopyWebpackPlugin([
-            {
-                from: path.join(sourceRootPath, "assets"),
-                to: path.join(distRootPath, "assets"),
-                test: /\.(jpg|jpeg|png|gif|svg)?$/,
-            },
-            {
-                from: path.join(sourceRootPath, "manifest.json"),
-                to: path.join(distRootPath, "manifest.json"),
-                toType: "file",
-            },
-        ]),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: path.join(sourceRootPath, "assets"),
+                    to: path.join(distRootPath, "assets"),
+                },
+                {
+                    from: path.join(sourceRootPath, "manifest.json"),
+                    to: path.join(distRootPath, "manifest.json"),
+                    toType: "file",
+                },
+            ],
+        }),
         new webpack.DefinePlugin({
             NODE_ENV: JSON.stringify(nodeEnv),
             WEB_BROWSER: JSON.stringify(webBrowser),
