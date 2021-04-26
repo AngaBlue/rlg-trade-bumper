@@ -1,6 +1,6 @@
 {
 	"name": "web-extension-starter",
-	"version": "1.0.0",
+	"version": "1.0.3",
 	"description": "A web browser extension starter - based on Typescript, React, Redux, Styled-Component, Webpack, and more. Runs on Chrome and Firefox.",
 	"main": "index.js",
 	"scripts": {

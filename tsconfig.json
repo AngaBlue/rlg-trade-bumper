@@ -16,7 +16,8 @@
     "moduleResolution": "node",
     "types": ["react", "chrome"],
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+	"skipLibCheck": true
   },
   "exclude": ["node_modules"]
 }

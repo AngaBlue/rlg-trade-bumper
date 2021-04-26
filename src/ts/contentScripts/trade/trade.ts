@@ -22,12 +22,12 @@ export class Trade {
 		this.state = TradeState.BUMPING;
 		let response: Response | null = null;
 		try {
-			response = await fetch(`${location.origin}/ajaxfunctions/bumpTrade.php`, {
+			response = await fetch(`${location.origin}/ajaxfunctions/bumpTrade.php?alias=${this.id}`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
-				body: `alias=${this.id}&csrf_token=${this.tradeManager.csfr}`
+				body: `csrf_token=${this.tradeManager.csfr}`
 			})
 		} catch (error) {
 			console.error(error)
