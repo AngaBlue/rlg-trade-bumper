@@ -33,7 +33,7 @@ export class Trade {
 			console.error(error)
 		}
 		if (response) {
-			let body = await response.text()
+			const body = await response.text()
 			this.state = TradeState.READY
 			if (body === "success") {
 				this.lastUpdated = Date.now()
@@ -66,11 +66,11 @@ export class TradeManager {
 	}
 	add = (trade: Trade) => {
 		//Find existing trade else add
-		let index = this.trades.findIndex(t => t.id === trade.id)
+		const index = this.trades.findIndex(t => t.id === trade.id)
 		if (index === -1) this.trades.push(trade)
 	}
 	remove = (id: Trade["id"]) => {
-		let index = this.trades.findIndex(t => t.id === id)
+		const index = this.trades.findIndex(t => t.id === id)
 		this.trades = this.trades.splice(index, 1)
 	}
 	clear = () => {
@@ -80,7 +80,7 @@ export class TradeManager {
 		if (this.timeout) clearTimeout(this.timeout)
 		if (this.settings.enabled) {
 			//Find Oldest, Ready Trade
-			let trade = this.trades.filter(t => t.state === TradeState.READY && t.lastUpdated < Date.now() - (15 * 60 * 1000)).sort((a, b) => a.lastUpdated - b.lastUpdated)[0]
+			const trade = this.trades.filter(t => t.state === TradeState.READY && t.lastUpdated < Date.now() - (15 * 60 * 1000)).sort((a, b) => a.lastUpdated - b.lastUpdated)[0]
 			if (trade && this.csfr) {
 				await trade.bump()
 			}

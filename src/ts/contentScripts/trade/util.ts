@@ -7,9 +7,9 @@
 export function parseTimeString(string: string) {
 	string = string.replace(" ago", "")
 	let relativeTime = 0;
-	let parts = string.split(", ").map(s => s.trim());
+	const parts = string.split(", ").map(s => s.trim());
 	parts.forEach(part => {
-		let digits = parseInt((part.match(/[0-9]+/) || ["0"])[0]) || 0;
+		const digits = parseInt((part.match(/[0-9]+/) || ["0"])[0]) || 0;
 		let unit = (part.match(/[a-z]+/) || [""])[0]
 		//Remove Trailing 's'
 		if (unit.endsWith("s")) unit = unit.replace(/s$/, "")
