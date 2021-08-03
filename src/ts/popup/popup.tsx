@@ -2,16 +2,18 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import * as ReactDOM from "react-dom";
 import {
+  ChakraProvider,
   Divider,
   Heading,
   Switch,
   Image,
   Text,
   Flex,
-  Icon,
-} from "@chakra-ui/core";
+  Box,
+  Link,
+} from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
 import "./styles/popup.css";
-import { ThemeProvider } from "emotion-theming";
 import theme from "./theme";
 import { browser } from "webextension-polyfill-ts";
 import { Activity } from "../contentScripts/trade/trade";
@@ -65,67 +67,69 @@ const Popup = () => {
     setSettings(newSettings);
   }
   return (
-    <ThemeProvider theme={theme}>
-      <Flex align="center">
-        <Image
-          src="assets/icon-128x128.png"
-          alt="Icon"
-          size="64px"
-          marginRight="16px"
-        />
-        <Heading size="md">Rocket League Garage Trade Bumper</Heading>
-      </Flex>
-      <Divider />
-      <Flex align="center" direction="column" justify="center">
-        <Heading size="sm">{settings.enabled ? "Enabled" : "Disabled"}</Heading>
-        <Switch
-          id="enabled"
-          size="lg"
-          color="purple"
-          isChecked={settings.enabled}
-          onChange={toggleEnabled}
-        />
-        <Text textAlign="center">
-          To automatically bump trades, go to the "My Trades" page on Rocket
-          League Garage and leave the tab open.
+    <ChakraProvider theme={theme}>
+      <Box p="4">
+        <Flex align="center">
+          <Image
+            src="assets/icon-128x128.png"
+            alt="Icon"
+            h="64px"
+            marginRight="8"
+          />
+          <Heading size="lg">Rocket League Garage<br />Trade Bumper</Heading>
+        </Flex>
+        <Divider my="4" />
+        <Flex align="center" direction="column" justify="center">
+          <Heading size="sm">
+            {settings.enabled ? "Enabled" : "Disabled"}
+          </Heading>
+          <Switch
+            id="enabled"
+            size="lg"
+            my="4"
+            colorScheme="brand"
+            isChecked={settings.enabled}
+            onChange={toggleEnabled}
+          />
+          <Text textAlign="center">
+            To automatically bump trades, go to the "My Trades" page on Rocket
+            League Garage and leave the tab open.
+          </Text>
+        </Flex>
+        <Divider my="4" />
+        <Heading size="sm" mb="4">Recent Activity</Heading>
+        {activity.length > 0 ? (
+          <div className="activity-container">
+            {activity.slice(0, 50).map((entry) => (
+              <Text key={entry.timestamp}>
+                <AddIcon marginRight="4" color="purple" />
+                Bumped a trade with id{" "}
+                <Text as="strong">{entry.id.split("-")[0]}</Text>{" "}
+                {dayjs(entry.timestamp).from(time)}.
+              </Text>
+            ))}
+            {activity.length > 50 && (
+              <Text as="i">
+                <AddIcon marginRight="4" color="purple" />
+                {activity.length - 50} more
+              </Text>
+            )}
+          </div>
+        ) : (
+          <Text>No recent activity yet.</Text>
+        )}
+        <Divider my="4" />
+        <Text>
+          Version {manifest.version}.
+          <br />
+          Developed by <Text as="strong">AngaBlue</Text>.{" "}
+          <Link href="https://anga.blue/contact" isExternal textDecor="underline">
+            Contact me
+          </Link>{" "}
+          for support.
         </Text>
-      </Flex>
-      <Divider />
-      <Heading size="sm">Recent Activity</Heading>
-      {activity.length > 0 ? (
-        <div className="activity-container">
-          {activity.slice(0, 20).map((entry) => (
-            <Text key={entry.timestamp}>
-              <Icon name="small-add" marginRight="4px" color="purple" />
-              Bumped a trade with id <Text as="strong">{entry.id.split("-")[0]}</Text>{" "}
-              {dayjs(entry.timestamp).from(time)}.
-            </Text>
-          ))}
-          {activity.length > 20 && (
-            <Text as="i">
-              <Icon name="small-add" marginRight="4px" color="purple" />
-              {activity.length - 20} more
-            </Text>
-          )}
-        </div>
-      ) : (
-        <Text>No recent activity yet.</Text>
-      )}
-      <Divider />
-      <Text>
-        Version {manifest.version}
-        <br />
-        Developed by <Text as="strong">AngaBlue</Text>.{" "}
-        <a
-          href="https://anga.blue/contact"
-          target="_blank"
-          rel="noopener noreferer"
-        >
-          Contact me
-        </a>{" "}
-        for support.
-      </Text>
-    </ThemeProvider>
+      </Box>
+    </ChakraProvider>
   );
 };
 

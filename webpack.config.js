@@ -3,7 +3,6 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const { CheckerPlugin } = require("awesome-typescript-loader");
 const ExtensionReloader = require("webpack-extension-reloader");
 const locateContentScripts = require("./utils/locateContentScripts");
 
@@ -43,12 +42,11 @@ module.exports = {
     },
     module: {
         rules: [
-            { test: /\.(js|ts|tsx)?$/, loader: "awesome-typescript-loader", exclude: /node_modules/ },
+            { test: /\.(js|ts|tsx)?$/, loader: "ts-loader", exclude: /node_modules/ },
             { test: /\.css$/, use: ["style-loader", "css-loader"] },
         ],
     },
     plugins: [
-        new CheckerPlugin(),
         new HtmlWebpackPlugin({
             template: path.join(sourceRootPath, "html", "popup.html"),
             inject: "body",

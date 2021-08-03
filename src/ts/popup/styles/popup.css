@@ -9,6 +9,8 @@ html, body {
 }
 
 .activity-container {
-	max-height: 240px;
+	max-height: 200px;
 	overflow-y: auto;
+	position: relative;
+	width: calc(100vw - 16px);
 }

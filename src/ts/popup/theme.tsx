@@ -1,4 +1,4 @@
-import { theme } from "@chakra-ui/core";
+import { theme } from "@chakra-ui/react";
 
 export default {
   ...theme,
@@ -14,11 +14,11 @@ export default {
 		600: "#6400b4",
 		700: "#470082",
 		800: "#2b0050",
-		900: "#100020",
+		900: "#100200",
 	},
   },
   config: {
 	initialColorMode: "dark",
-	useSystemColorMode: false,
+	useSystemColorMode: true,
   },
 };
