@@ -9,7 +9,7 @@
 		"watch": "cross-env NODE_ENV=watch webpack --mode development",
 		"clean": "rm -rf ./dist",
 		"clean:all": "rm -rf ./dist && rm -rf ./coverage && rm -rf ./node_modules",
-		"lint": "tslint -c tslint.json 'src/**/*.ts*'"
+		"lint": "tslint -c tslint.json --fix 'src/**/*.ts*'"
 	},
 	"license": "MIT",
 	"dependencies": {
