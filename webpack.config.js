@@ -51,7 +51,7 @@ module.exports = {
             template: path.join(sourceRootPath, "html", "popup.html"),
             inject: "body",
             filename: "popup.html",
-            title: "Web Extension Starter - Popup Page",
+            title: "Rocket League Garage Trade Bumper",
             chunks: ["popup"],
         }),
         new CopyWebpackPlugin({

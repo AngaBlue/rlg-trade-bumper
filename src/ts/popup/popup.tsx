@@ -120,7 +120,7 @@ const Popup = () => {
 		)}
 		<Divider my="4" />
 		<Text>
-			Version {manifest.version}.
+			Version {manifest.version}
 			<br />
 			Developed by <Text as="strong">AngaBlue</Text>.{" "}
 			<Link href="https://anga.blue/contact" isExternal textDecor="underline">
