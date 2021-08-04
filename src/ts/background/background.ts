@@ -6,6 +6,7 @@ import { defualtSettings, Settings } from "./settings";
 	const settings: Partial<Settings> | undefined = (await browser.storage.sync.get("settings")).settings;
 	const newSettings: Settings = Object.assign(defualtSettings, settings || {});
 	console.log("Updating Settings");
+	console.log(await browser.storage.local.get("logs"))
 	// Save Updated Settings
 	browser.storage.sync.set({ settings: newSettings });
 })();

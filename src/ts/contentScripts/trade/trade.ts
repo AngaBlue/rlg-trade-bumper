@@ -49,6 +49,10 @@ export class Trade {
 					// Bumped too early, update lastUpdated
 					this.lastUpdated = parseTimeString(body.replace("This trade is on a 15 minute bump cooldown. Your last bump was ", "").replace(".", "")) + 30 * 1000;
 				} else {
+					let logs: string = (await browser.storage.local.get("logs")).logs;
+					logs += "\n" + JSON.stringify(response) + "\n" + JSON.stringify(body)
+					browser.storage.local.set({ logs });
+					console.log(response, body)
 					location.reload();
 				}
 			}
