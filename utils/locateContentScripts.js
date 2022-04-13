@@ -9,7 +9,7 @@ const isDirectory = source => lstatSync(source).isDirectory();
  * Supports files ending with js, ts and tsx.
  * Throws error if more than one index file is present in the folder with the supported extensions.
  *  returns undefined if no file exists.
- * @param contentPath - String representaion of the content path.
+ * @param contentPath - String representation of the content path.
  * @returns - The index file name if exists in the given path.
  */
 const findContentEntryFile = contentPath => {

@@ -1,7 +1,21 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import * as ReactDOM from 'react-dom';
-import { ChakraProvider, Divider, Heading, Switch, Image, Text, Flex, Box, Link } from '@chakra-ui/react';
+import {
+    ChakraProvider,
+    Divider,
+    Heading,
+    Switch,
+    Image,
+    Text,
+    Flex,
+    Box,
+    Link,
+    RangeSlider,
+    RangeSliderFilledTrack,
+    RangeSliderThumb,
+    RangeSliderTrack
+} from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import './styles/popup.css';
 import { browser } from 'webextension-polyfill-ts';
@@ -9,7 +23,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Activity } from '../contentScripts/trade/trade';
 import theme from './theme';
-import { defualtSettings, Settings } from '../background/settings';
+import { defaultSettings, Settings } from '../background/settings';
 import manifest from '../../manifest.json';
 
 dayjs.extend(relativeTime);
@@ -17,7 +31,8 @@ dayjs.extend(relativeTime);
 const Popup = () => {
     const [activity, setActivity] = useState([] as Activity[]);
     const [time, setTime] = useState(Date.now());
-    const [settings, setSettings] = useState(defualtSettings);
+    const [settings, setSettings] = useState(defaultSettings);
+
     useEffect(() => {
         function handler(changes: Record<string, Storage['StorageChange']>) {
             // eslint-disable-next-line no-restricted-syntax
@@ -42,11 +57,13 @@ const Popup = () => {
         const timeInterval = setInterval(() => {
             setTime(Date.now());
         }, 3000);
+
         return () => {
             browser.storage.onChanged.removeListener(handler);
             clearInterval(timeInterval);
         };
     }, []);
+
     function toggleEnabled() {
         const newSettings: Settings = {
             ...settings,
@@ -57,6 +74,19 @@ const Popup = () => {
         });
         setSettings(newSettings);
     }
+
+    function updateBumpRange([min, max]: [number, number]) {
+        const newSettings: Settings = {
+            ...settings,
+            min,
+            max
+        };
+        browser.storage.sync.set({
+            settings: newSettings
+        });
+        setSettings(newSettings);
+    }
+
     return (
         <ChakraProvider theme={theme}>
             <Box p='4'>
@@ -74,6 +104,27 @@ const Popup = () => {
                     <Switch id='enabled' size='lg' my='4' colorScheme='brand' isChecked={settings.enabled} onChange={toggleEnabled} />
                     <Text textAlign='center'>
                         To automatically bump trades, go to the "My Trades" page on Rocket League Garage and leave the tab open.
+                    </Text>
+                    <RangeSlider
+                        aria-label={['min', 'max']}
+                        defaultValue={[15, 16]}
+                        step={1}
+                        min={1}
+                        max={60}
+                        colorScheme='brand'
+                        value={[settings.min, settings.max]}
+                        onChange={updateBumpRange}
+                        mt={4}
+                    >
+                        <RangeSliderTrack>
+                            <RangeSliderFilledTrack />
+                        </RangeSliderTrack>
+                        <RangeSliderThumb index={0} />
+                        <RangeSliderThumb index={1} />
+                    </RangeSlider>
+                    <Text textAlign='center'>
+                        Bumping trades every {settings.min !== settings.max ? `${settings.min} to ${settings.max}` : settings.min} minute
+                        {settings.max !== 1 ? 's' : ''}.
                     </Text>
                 </Flex>
                 <Divider my='4' />

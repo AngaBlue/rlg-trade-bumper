@@ -1,6 +1,6 @@
 {
 	"name": "rlg-trade-bumper",
-	"version": "1.0.3",
+	"version": "0.1.0",
 	"description": "A web browser extension starter - based on Typescript, React, Redux, Styled-Component, Webpack, and more. Runs on Chrome and Firefox.",
 	"main": "index.js",
 	"scripts": {
