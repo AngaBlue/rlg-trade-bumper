@@ -1,4 +1,5 @@
 import { browser } from 'webextension-polyfill-ts';
+import { defaultSettings } from '../../background/settings';
 import { Trade, TradeState } from './trade';
 
 export default class TradeManager {
@@ -8,7 +9,7 @@ export default class TradeManager {
 
     timeout: number | undefined;
 
-    settings = { enabled: false };
+    settings = defaultSettings;
 
     constructor() {
         this.bump();
