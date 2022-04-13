@@ -1,5 +1,5 @@
 export const defualtSettings = {
-	enabled: true
+    enabled: true
 };
 
 export type Settings = typeof defualtSettings;

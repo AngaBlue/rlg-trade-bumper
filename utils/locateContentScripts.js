@@ -1,10 +1,8 @@
-const path = require("path");
-const { readdirSync, lstatSync } = require("fs");
-const {
-    red, yellow, reset,
-} = require("./consoleColors");
+const path = require('path');
+const { readdirSync, lstatSync } = require('fs');
+const { red, yellow, reset } = require('./consoleColors');
 
-const isDirectory = (source) => lstatSync(source).isDirectory();
+const isDirectory = source => lstatSync(source).isDirectory();
 
 /**
  * findContentEntryFile - Will return the index file in a path.
@@ -14,8 +12,8 @@ const isDirectory = (source) => lstatSync(source).isDirectory();
  * @param contentPath - String representaion of the content path.
  * @returns - The index file name if exists in the given path.
  */
-const findContentEntryFile = (contentPath) => {
-    const files = readdirSync(contentPath).filter((name) => /index.(js|ts|tsx|css)/.test(name));
+const findContentEntryFile = contentPath => {
+    const files = readdirSync(contentPath).filter(name => /index.(js|ts|tsx|css)/.test(name));
     if (!files || files.length < 1) {
         console.log(`${yellow}Could not find any index files in path:${reset}\n${contentPath}\n`);
         return undefined;
@@ -34,19 +32,22 @@ const findContentEntryFile = (contentPath) => {
  * @param rootPath - String representation of the root path.
  * @returns - A list of objects containing path and folder name
  */
-const getDirectories = (rootPath) => readdirSync(rootPath)
-    .map((name) => ({
-        path: path.join(rootPath, name),
-        folderName: name,
-    }))
-    .filter((dir) => isDirectory(dir.path));
+const getDirectories = rootPath =>
+    readdirSync(rootPath)
+        .map(name => ({
+            path: path.join(rootPath, name),
+            folderName: name
+        }))
+        .filter(dir => isDirectory(dir.path));
 
-const locateContentScripts = (rootPath) => {
+const locateContentScripts = rootPath => {
     const entries = {};
     const directories = getDirectories(rootPath);
-    directories.forEach((dir) => {
+    directories.forEach(dir => {
         const entryFile = findContentEntryFile(dir.path);
-        if (entryFile) { entries[dir.folderName] = path.join(dir.path, entryFile); }
+        if (entryFile) {
+            entries[dir.folderName] = path.join(dir.path, entryFile);
+        }
     });
     return entries;
 };

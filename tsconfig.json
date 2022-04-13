@@ -17,8 +17,8 @@
     "types": ["react", "chrome"],
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-	"skipLibCheck": true,
+	"skipLibCheck": false,
 	"resolveJsonModule": true
   },
-  "exclude": ["node_modules"]
+  "exclude": ["dist"]
 }
