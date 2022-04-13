@@ -19,11 +19,11 @@ const checkReady = setInterval(async () => {
             const userElement = document.querySelector('div.rlg-header-main-user > div > a > span');
             const username = userElement ? userElement.textContent : null;
 
-            // const premium = !!document.querySelector('[href="/functions/bumpAllTrades.php"]');
+            const premium = !!document.querySelector('[href="/functions/bumpAllTrades.php"]');
 
             if (username && [`/trades/${username}`, `/player/${username}`].includes(location.pathname)) {
                 // Check if Existing Tab Open
-                const manager = new TradeManager();
+                const manager = new TradeManager(premium);
 
                 // Set CSFR
                 const CSFRElement = document.getElementById('window-csrf');

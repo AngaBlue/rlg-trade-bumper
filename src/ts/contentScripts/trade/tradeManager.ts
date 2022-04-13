@@ -11,7 +11,10 @@ export default class TradeManager {
 
     settings = defaultSettings;
 
-    constructor() {
+    premium: boolean;
+
+    constructor(premium: boolean) {
+        this.premium = premium;
         this.bump();
         this.syncSettings();
     }
