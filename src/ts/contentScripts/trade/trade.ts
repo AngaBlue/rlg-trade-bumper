@@ -1,5 +1,5 @@
 import { browser } from 'webextension-polyfill-ts';
-import TradeManager from './tradeManager';
+import TradeManager from './TradeManager';
 import parseTimeString from './util';
 
 export enum TradeState {
@@ -73,7 +73,8 @@ export class Trade {
                 console.log(`Bumped Trade: ${this.id}`);
             } else if (
                 body.startsWith('This trade is on a 15 minute bump cooldown.') ||
-                body.startsWith('Your ability to bump trades has been temporarily disabled.')
+                body.startsWith('Your ability to bump trades has been temporarily disabled.') ||
+                body.startsWith("You're making an excessive amount of failed bump attempts, slow down!")
             ) {
                 // Bumped too early, update lastUpdated
                 this.lastUpdated =
