@@ -15,8 +15,6 @@ export default class TradeManager {
 
     constructor(premium: boolean) {
         this.premium = premium;
-        this.bump();
-        this.syncSettings();
     }
 
     add = (trade: Trade) => {

@@ -1,11 +1,10 @@
 import { browser } from 'webextension-polyfill-ts';
 import TradeManager from './TradeManager';
-import parseTimeString from './util';
 
 export enum TradeState {
-    BUMPING = 'bumping',
-    READY = 'ready',
-    UNAVAILABLE = 'unavailable'
+    BUMPING,
+    READY,
+    UNAVAILABLE
 }
 
 export class Trade {
@@ -77,9 +76,7 @@ export class Trade {
                 body.startsWith("You're making an excessive amount of failed bump attempts, slow down!")
             ) {
                 // Bumped too early, update lastUpdated
-                this.lastUpdated =
-                    parseTimeString(body.replace('This trade is on a 15 minute bump cooldown. Your last bump was ', '').replace('.', '')) +
-                    60 * 1000;
+                this.lastUpdated += 60 * 1000;
                 this.calculateBumpTimeout();
             } else {
                 let { logs } = await browser.storage.local.get('logs');
