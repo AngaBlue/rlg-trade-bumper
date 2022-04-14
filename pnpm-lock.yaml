@@ -24,6 +24,7 @@ specifiers:
   prettier: ^2.6.2
   react: ^18.0.0
   react-dom: ^18.0.0
+  react-icons: ^4.3.1
   react-test-renderer: ^18.0.0
   style-loader: ^3.3.1
   ts-loader: ^9.2.8
@@ -45,6 +46,7 @@ dependencies:
   framer-motion: 6.2.10_react-dom@18.0.0+react@18.0.0
   react: 18.0.0
   react-dom: 18.0.0_react@18.0.0
+  react-icons: 4.3.1_react@18.0.0
   style-loader: 3.3.1_webpack@5.72.0
   webextension-polyfill-ts: 0.26.0
 
@@ -3759,6 +3761,14 @@ packages:
       use-sidecar: 1.0.5_react@18.0.0
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
+
+  /react-icons/4.3.1_react@18.0.0:
+    resolution: {integrity: sha512-cB10MXLTs3gVuXimblAdI71jrJx8njrJZmNMEMC+sQu5B/BIOmlsAjskdqpn81y8UBVEGuHODd7/ci5DvoSzTQ==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.0.0
     dev: false
 
   /react-is/16.13.1:

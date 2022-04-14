@@ -30,16 +30,24 @@ export default class TradeManager {
         this.trades = this.trades.splice(index, 1);
     };
 
+    recalculateTradeBumpTimeout = () => {
+        this.trades.forEach(trade => trade.calculateBumpTimeout());
+    };
+
     clear = () => {
         this.trades = [];
     };
 
     bump = async () => {
-        if (this.timeout) clearTimeout(this.timeout);
+        if (this.timeout) {
+            clearTimeout(this.timeout);
+            this.timeout = undefined;
+        }
+
         if (this.settings.enabled) {
             // Find Oldest, Ready Trade
             const trade = this.trades
-                .filter(t => t.state === TradeState.READY && t.lastUpdated < Date.now() - 15 * 60 * 1000)
+                .filter(t => t.state === TradeState.READY && t.bumpTimestamp < Date.now())
                 .sort((a, b) => a.lastUpdated - b.lastUpdated)[0];
             if (trade && this.csfr) {
                 await trade.bump();
@@ -58,6 +66,7 @@ export default class TradeManager {
                 switch (key) {
                     case 'settings':
                         this.settings = changes.settings.newValue;
+                        this.recalculateTradeBumpTimeout();
                         break;
                 }
             }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import {
     ChakraProvider,
     Divider,
@@ -14,13 +14,15 @@ import {
     RangeSlider,
     RangeSliderFilledTrack,
     RangeSliderThumb,
-    RangeSliderTrack
+    RangeSliderTrack,
+    Icon
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import './styles/popup.css';
 import { browser } from 'webextension-polyfill-ts';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { FaPaypal } from 'react-icons/fa';
 import { Activity } from '../contentScripts/trade/trade';
 import theme from './theme';
 import { defaultSettings, Settings } from '../background/settings';
@@ -30,7 +32,7 @@ dayjs.extend(relativeTime);
 
 const Popup = () => {
     const [activity, setActivity] = useState([] as Activity[]);
-    const [time, setTime] = useState(Date.now());
+    const [time, setTime] = useState(Date.now() + 10_000);
     const [settings, setSettings] = useState(defaultSettings);
 
     useEffect(() => {
@@ -53,9 +55,9 @@ const Popup = () => {
             if (settings) setSettings(data.settings);
         });
 
-        // Update Time Every 5 Seconds
+        // Update Time Every 3 Seconds
         const timeInterval = setInterval(() => {
-            setTime(Date.now());
+            setTime(Date.now() + 10_000);
         }, 3000);
 
         return () => {
@@ -109,7 +111,7 @@ const Popup = () => {
                         aria-label={['min', 'max']}
                         defaultValue={[15, 16]}
                         step={1}
-                        min={1}
+                        min={15}
                         max={60}
                         colorScheme='brand'
                         value={[settings.min, settings.max]}
@@ -152,7 +154,17 @@ const Popup = () => {
                 )}
                 <Divider my='4' />
                 <Text>
-                    Version {manifest.version}
+                    <Text display='inline-block'>Version {manifest.version}</Text>
+                    <Link
+                        float='right'
+                        href='https://www.paypal.com/donate/?hosted_button_id=A3D7XYBB3WM9J'
+                        isExternal
+                        textDecor='underline'
+                        display='inline-block'
+                    >
+                        Donate
+                        <Icon as={FaPaypal} ml={2} />
+                    </Link>
                     <br />
                     Developed by <Text as='strong'>AngaBlue</Text>.{' '}
                     <Link href='https://anga.blue/contact' isExternal textDecor='underline'>
@@ -165,4 +177,5 @@ const Popup = () => {
     );
 };
 
-ReactDOM.render(<Popup />, document.getElementById('root'));
+const root = createRoot(document.getElementById('root')!);
+root.render(<Popup />);

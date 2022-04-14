@@ -38,6 +38,8 @@ const checkReady = setInterval(async () => {
                     if (id) manager.add(new Trade(manager, { id, lastUpdated: time }));
                 }
 
+                manager.recalculateTradeBumpTimeout();
+
                 // Reload every 5 minutes to update CSRF + update trade list
                 setTimeout(() => {
                     location.reload();

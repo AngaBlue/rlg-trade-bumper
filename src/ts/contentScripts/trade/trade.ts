@@ -13,7 +13,18 @@ export class Trade {
 
     state: TradeState = TradeState.READY;
 
-    lastUpdated: number;
+    private _lastUpdated = 0;
+
+    get lastUpdated() {
+        return this._lastUpdated;
+    }
+
+    set lastUpdated(lastUpdated: number) {
+        this._lastUpdated = lastUpdated;
+        this.tradeManager.recalculateTradeBumpTimeout();
+    }
+
+    bumpTimestamp = 0;
 
     tradeManager: TradeManager;
 
@@ -21,6 +32,12 @@ export class Trade {
         this.tradeManager = tradeManager;
         this.id = details.id;
         this.lastUpdated = details.lastUpdated || Date.now();
+    }
+
+    calculateBumpTimeout() {
+        const { min, max } = this.tradeManager.settings;
+        const timeout = Math.floor((Math.random() * (max - min) + min) * 60 * 1000);
+        this.bumpTimestamp = this.lastUpdated + timeout;
     }
 
     bump = async () => {
@@ -46,6 +63,7 @@ export class Trade {
 
             if (body === 'success') {
                 this.lastUpdated = Date.now();
+
                 // Update Activity
                 let activity: Activity[] = (await browser.storage.sync.get('activity')).activity || [];
                 activity.unshift({ id: this.id, timestamp: Date.now() - 1000 });
@@ -53,11 +71,15 @@ export class Trade {
                 browser.storage.sync.set({ activity });
 
                 console.log(`Bumped Trade: ${this.id}`);
-            } else if (body.startsWith('This trade is on a 15 minute bump cooldown.')) {
+            } else if (
+                body.startsWith('This trade is on a 15 minute bump cooldown.') ||
+                body.startsWith('Your ability to bump trades has been temporarily disabled.')
+            ) {
                 // Bumped too early, update lastUpdated
                 this.lastUpdated =
                     parseTimeString(body.replace('This trade is on a 15 minute bump cooldown. Your last bump was ', '').replace('.', '')) +
-                    30 * 1000;
+                    60 * 1000;
+                this.calculateBumpTimeout();
             } else {
                 let { logs } = await browser.storage.local.get('logs');
                 logs += `\n${JSON.stringify(response)}\n${JSON.stringify(body)}`;
