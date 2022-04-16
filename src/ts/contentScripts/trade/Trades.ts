@@ -1,5 +1,5 @@
 import { browser } from 'webextension-polyfill-ts';
-import TradeManager from './TradeManager';
+import TradeManager from './TradesManager';
 
 export enum TradeState {
     BUMPING,
@@ -36,6 +36,7 @@ export class Trade {
     calculateBumpTimeout() {
         const { min, max } = this.tradeManager.settings;
         const timeout = Math.floor((Math.random() * (max - min) + min) * 60 * 1000);
+        console.log(timeout);
         this.bumpTimestamp = this.lastUpdated + timeout;
     }
 
@@ -75,6 +76,7 @@ export class Trade {
                 body.startsWith('Your ability to bump trades has been temporarily disabled.') ||
                 body.startsWith("You're making an excessive amount of failed bump attempts, slow down!")
             ) {
+                console.log(this, body);
                 // Bumped too early, update lastUpdated
                 this.lastUpdated += 60 * 1000;
                 this.calculateBumpTimeout();

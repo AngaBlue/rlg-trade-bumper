@@ -1,6 +1,6 @@
 import { browser } from 'webextension-polyfill-ts';
 import { defaultSettings } from '../../background/settings';
-import { Trade, TradeState } from './Trade';
+import { Trade, TradeState } from './Trades';
 
 export default class TradeManager {
     trades: Trade[] = [];

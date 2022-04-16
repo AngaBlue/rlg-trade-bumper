@@ -1,5 +1,5 @@
-import { Trade } from './Trade';
-import TradeManager from './TradeManager';
+import { Trade } from './Trades';
+import TradeManager from './TradesManager';
 import parseTimeString from './util';
 
 // eslint-disable-next-line consistent-return
