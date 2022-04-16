@@ -58,7 +58,7 @@ const Popup = () => {
         // Update Time Every 3 Seconds
         const timeInterval = setInterval(() => {
             setTime(Date.now() + 10_000);
-        }, 3000);
+        }, 3_000);
 
         return () => {
             browser.storage.onChanged.removeListener(handler);

@@ -45,7 +45,7 @@ const checkReady = setInterval(async () => {
                 // Reload every 5 minutes to update CSRF + update trade list
                 setTimeout(() => {
                     location.reload();
-                }, 5 * 60 * 1000);
+                }, 5 * 60 * 1_000);
             }
         }
     }
