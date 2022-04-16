@@ -23,7 +23,7 @@ import { browser } from 'webextension-polyfill-ts';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { FaPaypal } from 'react-icons/fa';
-import { Activity } from '../contentScripts/trade/Trades';
+import { Activity } from '../contentScripts/trade/Trade';
 import theme from './theme';
 import { defaultSettings, Settings } from '../background/settings';
 import manifest from '../../manifest.json';

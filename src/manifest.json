@@ -1,6 +1,6 @@
 {
 	"name": "RLG Trade Bumper",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"author": "AngaBlue",
 	"description": "Automatically bump your Rocket League Garage trades, and sit back while the trades roll in!",
 	"homepage_url": "https://anga.blue",
@@ -24,7 +24,7 @@
 		"scripts": [
 			"background.js"
 		],
-		"persistent": true
+		"persistent": false
 	},
 	"content_scripts": [
 		{

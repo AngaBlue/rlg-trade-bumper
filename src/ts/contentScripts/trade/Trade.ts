@@ -1,5 +1,6 @@
 import { browser } from 'webextension-polyfill-ts';
-import TradeManager from './TradesManager';
+import TradeManager from './TradeManager';
+import parseTimeString from './util';
 
 export enum TradeState {
     BUMPING,
@@ -20,10 +21,10 @@ export class Trade {
 
     set lastUpdated(lastUpdated: number) {
         this._lastUpdated = lastUpdated;
-        this.tradeManager.recalculateTradeBumpTimeout();
+        this.calculateBumpTimeout();
     }
 
-    bumpTimestamp = 0;
+    bumpTimestamp = Number.MAX_SAFE_INTEGER;
 
     tradeManager: TradeManager;
 
@@ -35,8 +36,7 @@ export class Trade {
 
     calculateBumpTimeout() {
         const { min, max } = this.tradeManager.settings;
-        const timeout = Math.floor((Math.random() * (max - min) + min) * 60 * 1000);
-        console.log(timeout);
+        const timeout = Math.floor((Math.random() * (max - min) + min) * 60_000);
         this.bumpTimestamp = this.lastUpdated + timeout;
     }
 
@@ -66,20 +66,23 @@ export class Trade {
 
                 // Update Activity
                 let activity: Activity[] = (await browser.storage.sync.get('activity')).activity || [];
-                activity.unshift({ id: this.id, timestamp: Date.now() - 1000 });
+                activity.unshift({ id: this.id, timestamp: Date.now() - 1_000 });
                 if (activity.length > 100) activity = activity.slice(0, 100);
                 browser.storage.sync.set({ activity });
 
                 console.log(`Bumped Trade: ${this.id}`);
+            } else if (body.startsWith('This trade is on a 15 minute bump cooldown.')) {
+                // Bumped too early, update lastUpdated
+                const timeString = body.replace('This trade is on a 15 minute bump cooldown. Your last bump was ', '').replace('.', '');
+                this.lastUpdated = parseTimeString(timeString) + 30_000;
             } else if (
-                body.startsWith('This trade is on a 15 minute bump cooldown.') ||
                 body.startsWith('Your ability to bump trades has been temporarily disabled.') ||
                 body.startsWith("You're making an excessive amount of failed bump attempts, slow down!")
             ) {
-                console.log(this, body);
-                // Bumped too early, update lastUpdated
-                this.lastUpdated += 60 * 1000;
-                this.calculateBumpTimeout();
+                // Bumped too many too early, update all lastUpdated
+                this.tradeManager.trades.forEach(trade => {
+                    trade.lastUpdated += 60_000;
+                });
             } else {
                 let { logs } = await browser.storage.local.get('logs');
                 logs += `\n${JSON.stringify(response)}\n${JSON.stringify(body)}`;
@@ -91,6 +94,7 @@ export class Trade {
         }
     };
 }
+
 export interface Activity {
     id: string;
     timestamp: number;

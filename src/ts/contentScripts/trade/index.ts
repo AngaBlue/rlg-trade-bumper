@@ -1,5 +1,5 @@
-import { Trade } from './Trades';
-import TradeManager from './TradesManager';
+import { Trade } from './Trade';
+import TradeManager from './TradeManager';
 import parseTimeString from './util';
 
 // eslint-disable-next-line consistent-return
@@ -30,6 +30,8 @@ const checkReady = setInterval(async () => {
                 manager.csfr = CSFRElement ? CSFRElement.innerText.split('"')[1] : '';
                 const trades = document.getElementsByClassName('rlg-trade');
 
+                await manager.syncSettings();
+
                 // eslint-disable-next-line no-restricted-syntax
                 for (const trade of trades) {
                     // Parse Trades
@@ -38,8 +40,6 @@ const checkReady = setInterval(async () => {
                     if (id) manager.add(new Trade(manager, { id, lastUpdated: time }));
                 }
 
-                await manager.syncSettings();
-                manager.recalculateTradeBumpTimeout();
                 manager.bump();
 
                 // Reload every 5 minutes to update CSRF + update trade list

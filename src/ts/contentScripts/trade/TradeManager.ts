@@ -1,13 +1,13 @@
 import { browser } from 'webextension-polyfill-ts';
 import { defaultSettings } from '../../background/settings';
-import { Trade, TradeState } from './Trades';
+import { Trade, TradeState } from './Trade';
 
 export default class TradeManager {
     trades: Trade[] = [];
 
     csfr?: string;
 
-    timeout: number | undefined;
+    timeout?: number;
 
     settings = defaultSettings;
 
@@ -51,8 +51,8 @@ export default class TradeManager {
                 await trade.bump();
             }
         }
-        // Recheck 5 - 10 seconds later
-        this.timeout = setTimeout(this.bump, Math.floor(Math.random() * 5000) + 5000);
+        // Recheck 3 - 5 seconds later
+        this.timeout = setTimeout(this.bump, Math.floor(Math.random() * 2_000) + 3_000);
     };
 
     syncSettings = async () => {

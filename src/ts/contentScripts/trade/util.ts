@@ -14,16 +14,16 @@ export default function parseTimeString(input: string) {
         if (unit.endsWith('s')) unit = unit.replace(/s$/, '');
         switch (unit) {
             case 'second':
-                relativeTime += digits * 1000;
+                relativeTime += digits * 1_000;
                 break;
             case 'minute':
-                relativeTime += digits * 1000 * 60;
+                relativeTime += digits * 1_000 * 60;
                 break;
             case 'hour':
-                relativeTime += digits * 1000 * 60 * 60;
+                relativeTime += digits * 1_000 * 60 * 60;
                 break;
             case 'day':
-                relativeTime += digits * 1000 * 60 * 60 * 24;
+                relativeTime += digits * 1_000 * 60 * 60 * 24;
                 break;
         }
     });
