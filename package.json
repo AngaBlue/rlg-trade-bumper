@@ -1,17 +1,15 @@
 {
 	"name": "rlg-trade-bumper",
 	"version": "0.1.1",
-	"description": "A web browser extension starter - based on Typescript, React, Redux, Styled-Component, Webpack, and more. Runs on Chrome and Firefox.",
-	"main": "index.js",
+	"description": "A chromium/gecko based web browser extension that automatically bumps your trades on Rocket League Garage.",
+	"main": "dist/trade.js",
 	"scripts": {
-		"dev": "cross-env NODE_ENV=development webpack --mode development",
-		"prod": "cross-env NODE_ENV=production webpack --mode production",
+		"build": "cross-env NODE_ENV=production webpack --mode production",
 		"watch": "cross-env NODE_ENV=watch webpack --mode development",
 		"clean": "rm -rf ./dist",
-		"clean:all": "rm -rf ./dist && rm -rf ./coverage && rm -rf ./node_modules",
 		"lint": "eslint . --ext js,jsx,ts,tsx --fix"
 	},
-	"license": "MIT",
+	"license": "LGPL-3.0-or-later",
 	"dependencies": {
 		"@chakra-ui/icons": "^1.1.7",
 		"@chakra-ui/react": "^1.8.8",
@@ -30,7 +28,7 @@
 	"devDependencies": {
 		"@angablue/eslint-config": "^1.3.2",
 		"@types/chrome": "^0.0.181",
-		"@types/node": "^17.0.24",
+		"@types/node": "^17.0.25",
 		"@types/react": "18.0.5",
 		"@types/react-dom": "^18.0.1",
 		"@types/react-test-renderer": "^18.0.0",
@@ -51,6 +49,6 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/ymdevs/Web-Extension-Starter.git"
+		"url": "git+https://github.com/AngaBlue/rlg-trade-bumper.git"
 	}
 }

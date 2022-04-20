@@ -20,11 +20,12 @@ A chromium/gecko based web browser extension that automatically bumps your trade
 
 Install this extension on your browser from...
 
-- [Chrome/Edge/Brave/Opera](https://chrome.google.com/webstore/detail/rlg-trade-bumper/hochdggaanpfbpoigfkmcnkekghmijbk)
-- [Firefox](https://addons.mozilla.org/en-US/firefox/addon/rlg-trade-bumper/)
+- [Chrome Web Store](https://chrome.google.com/webstore/detail/rlg-trade-bumper/hochdggaanpfbpoigfkmcnkekghmijbk) - Chrome/Edge/Brave/Opera
+- [Firefox Browser Add-ons](https://addons.mozilla.org/en-US/firefox/addon/rlg-trade-bumper/) - Firefox
 
 ## Features
 
+- Adjustable (and randomized) trade bumping delay, from 15 minutes to an hour
 - Simple + easy to use. Add this extension and open the "My Trades" page on Rocket League Garage to start automatically bumping.
 - Bump Logs. See when your trades were last bumped by clicking on the RLG Trade Bumper icon.
 - Quick on/off switch. Turn the bumper on or off whenever you like.
