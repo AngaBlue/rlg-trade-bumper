@@ -1,6 +1,6 @@
 {
 	"name": "rlg-trade-bumper",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "A chromium/gecko based web browser extension that automatically bumps your trades on Rocket League Garage.",
 	"main": "dist/trade.js",
 	"scripts": {

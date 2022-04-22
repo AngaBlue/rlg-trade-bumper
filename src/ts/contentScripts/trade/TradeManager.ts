@@ -11,12 +11,6 @@ export default class TradeManager {
 
     settings = defaultSettings;
 
-    premium: boolean;
-
-    constructor(premium: boolean) {
-        this.premium = premium;
-    }
-
     add = (trade: Trade) => {
         // Find existing trade else add
         const index = this.trades.findIndex(t => t.id === trade.id);
