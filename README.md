@@ -16,6 +16,8 @@
 
 A chromium/gecko based web browser extension that automatically bumps your trades on [Rocket League Garage](https://rocket-league.com).
 
+_I've recently started work as a developer at [Rocket League Garage](https://rocket-league.com).  As such this extension is no longer available from the Chrome Web Store or Firefox Browser Add-ons._
+
 ## Install
 
 Install this extension on your browser from...
