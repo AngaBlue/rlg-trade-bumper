@@ -22,8 +22,8 @@ _I've recently started work as a developer at [Rocket League Garage](https://roc
 
 Install this extension on your browser from...
 
-- [Chrome Web Store](https://chrome.google.com/webstore/detail/rlg-trade-bumper/hochdggaanpfbpoigfkmcnkekghmijbk) - Chrome/Edge/Brave/Opera
-- [Firefox Browser Add-ons](https://addons.mozilla.org/en-US/firefox/addon/rlg-trade-bumper/) - Firefox
+- ~~[Chrome Web Store](https://chrome.google.com/webstore/detail/rlg-trade-bumper/hochdggaanpfbpoigfkmcnkekghmijbk) - Chrome/Edge/Brave/Opera~~
+- ~~[Firefox Browser Add-ons](https://addons.mozilla.org/en-US/firefox/addon/rlg-trade-bumper/) - Firefox~~
 
 ## Features
 
